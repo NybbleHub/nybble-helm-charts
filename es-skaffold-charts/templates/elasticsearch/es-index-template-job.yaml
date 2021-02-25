@@ -9,13 +9,9 @@ metadata:
     "helm.sh/hook": "post-install"
 spec:
   template:
-    metadata:
-        labels:
-{{ include "opendistro-es.labels.standard" . | indent 10 }}
-      name: {{ template "opendistro-es.fullname" . }}-index-template
     spec:
       containers:
-        - name: {{ template "opendistro-es.fullname" . }}-index-template
+      - name: {{ template "opendistro-es.fullname" . }}-index-template
         image: busybox:latest
         command: 
         - 'sh'
