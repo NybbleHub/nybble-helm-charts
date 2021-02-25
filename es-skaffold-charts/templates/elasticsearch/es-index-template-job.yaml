@@ -8,12 +8,18 @@ metadata:
   annotations:
     "helm.sh/hook": "post-install"
 spec:
-  containers:
-    - name: {{ template "opendistro-es.fullname" . }}-index-template
-      image: busybox:latest
-      command: 
-      - 'sh'
-      - '-c'
-      - >
-        wget -O nybble-es-template.json {{ .Values.elasticsearch.pushIndexTemplate.templatePath }} && curl -XPUT --insecure -u admin:admin -H 'Content-Type: application/json' https://{{ template "opendistro-es.fullname" . }}-client-service:9200/_index_template/nybble-template -@nybble-es-template.json
+  template:
+    metadata:
+        labels:
+{{ include "opendistro-es.labels.standard" . | indent 10 }}
+      name: {{ template "opendistro-es.fullname" . }}-index-template
+    spec:
+      containers:
+        - name: {{ template "opendistro-es.fullname" . }}-index-template
+        image: busybox:latest
+        command: 
+        - 'sh'
+        - '-c'
+        - >
+          wget -O nybble-es-template.json {{ .Values.elasticsearch.pushIndexTemplate.templatePath }} && curl -XPUT --insecure -u admin:admin -H 'Content-Type: application/json' https://{{ template "opendistro-es.fullname" . }}-client-service:9200/_index_template/nybble-template -@nybble-es-template.json
 {{- end }}
