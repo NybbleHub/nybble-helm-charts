@@ -15,9 +15,12 @@ spec:
       containers:
       - name: {{ template "opendistro-es.fullname" . }}-index-template
         image: busybox:latest
-        command: 
-        - 'sh'
-        - '-c'
-        - >
-          wget -O nybble-es-template.json {{ .Values.elasticsearch.pushIndexTemplate.templatePath }} && curl -XPUT --insecure -u admin:admin -H 'Content-Type: application/json' https://{{ template "opendistro-es.fullname" . }}-client-service:9200/_index_template/nybble-template -@nybble-es-template.json
+        command: ["/bin/sh", "-c"]
+        args:
+          - wget
+          - "-O"
+          - "nybble-es-template.json"
+          - {{ .Values.elasticsearch.pushIndexTemplate.templatePath }}; 
+          - cat 
+          - nybble-es-template.json; #curl -XPUT --insecure -u admin:admin -H 'Content-Type: application/json' https://{{ template "opendistro-es.fullname" . }}-client-service:9200/_index_template/nybble-template -@nybble-es-template.json
 {{- end }}
