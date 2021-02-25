@@ -10,6 +10,7 @@ metadata:
 spec:
   template:
     spec:
+      restartPolicy: OnFailure
       containers:
       - name: {{ template "opendistro-es.fullname" . }}-index-template
         image: busybox:latest
