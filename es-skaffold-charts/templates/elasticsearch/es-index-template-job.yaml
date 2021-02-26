@@ -4,14 +4,23 @@ kind: Job
 metadata:
   name: {{ template "opendistro-es.fullname" . }}-index-template
   namespace: {{ .Release.Namespace }}
-  annotations:
-    "helm.sh/hook": post-install
-    "helm.sh/hook-delete-policy": hook-succeeded
+  #annotations:
+  #  "helm.sh/hook": post-install
+  #  "helm.sh/hook-delete-policy": hook-succeeded
 spec:
   ttlSecondsAfterFinished: 60
   template:
     spec:
       restartPolicy: OnFailure
+      initContainers:
+        - name: es-init
+          image: busybox:latest
+          env:
+            - name: es.client.host
+              value: {{ template "opendistro-es.fullname" . }}-client-service
+            - name: es.client.port
+              value: 9200
+          command: [ 'sh', '-c', 'until nc -vz $(es.client.host) $(es.client.port); do echo "Waiting for Elasticsearch client server"; sleep 5; done;' ]
       containers:
         - name: {{ template "opendistro-es.fullname" . }}-index-template
           image: nybbledevcontainerregistry.azurecr.io/nybbledev/nybble-toolbox:latest
