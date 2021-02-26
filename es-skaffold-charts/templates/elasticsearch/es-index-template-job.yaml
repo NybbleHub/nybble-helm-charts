@@ -16,7 +16,7 @@ spec:
       restartPolicy: OnFailure
       containers:
       - name: {{ template "opendistro-es.fullname" . }}-index-template
-        image: nybble-toolbox
+        image: nybbledevcontainerregistry.azurecr.io/nybbledev/nybble-toolbox:latest
         env:
         - name: index.template.path
           value: {{ .Values.elasticsearch.pushIndexTemplate.templatePath }}
