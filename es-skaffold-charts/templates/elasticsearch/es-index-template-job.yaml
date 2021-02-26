@@ -14,6 +14,14 @@ spec:
       restartPolicy: OnFailure
       initContainers:
         - name: es-init
+          image: busybox:latest
+          env:
+            - name: es.client.host
+              value: {{ template "opendistro-es.fullname" . }}-client-service
+            - name: es.client.port
+              value: 9200
+          command: [ 'sh', '-c', 'until nc -vz $(es.client.host) $(es.client.port); do echo "Waiting for Elasticsearch client server to be up"; sleep 5; done;' ]
+        - name: es-security-init
           image: nybbledevcontainerregistry.azurecr.io/nybbledev/nybble-toolbox:latest
           env:
             - name: client.node
