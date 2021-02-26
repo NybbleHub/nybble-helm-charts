@@ -2,8 +2,6 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  labels:
-{{ include "opendistro-es.labels.standard" . | indent 4 }}
   name: {{ template "opendistro-es.fullname" . }}-index-template
   namespace: {{ .Release.Namespace }}
   annotations:
@@ -15,13 +13,13 @@ spec:
     spec:
       restartPolicy: OnFailure
       containers:
-      - name: {{ template "opendistro-es.fullname" . }}-index-template
-        image: nybbledevcontainerregistry.azurecr.io/nybbledev/nybble-toolbox:latest
-        env:
-        - name: index.template.path
-          value: {{ .Values.elasticsearch.pushIndexTemplate.templatePath }}
-        - name: client.node
-          value: {{ template "opendistro-es.fullname" . }}-client-service:9200
-        command: ["/bin/sh"]
-        args: ["-c", "wget --output-document nybble-es-template.json $(index.template.path) && curl -XPUT --insecure -u admin:admin -H 'Content-Type: application/json' https://$(client.node)/_index_template/nybble-template -d@nybble-es-template.json"]
+        - name: {{ template "opendistro-es.fullname" . }}-index-template
+          image: nybbledevcontainerregistry.azurecr.io/nybbledev/nybble-toolbox:latest
+          env:
+            - name: index.template.path
+            value: {{ .Values.elasticsearch.pushIndexTemplate.templatePath }}
+            - name: client.node
+            value: {{ template "opendistro-es.fullname" . }}-client-service:9200
+          command: ["/bin/sh"]
+          args: ["-c", "wget --output-document nybble-es-template.json $(index.template.path) && curl -XPUT --insecure -u admin:admin -H 'Content-Type: application/json' https://$(client.node)/_index_template/nybble-template -d@nybble-es-template.json"]
 {{- end }}
