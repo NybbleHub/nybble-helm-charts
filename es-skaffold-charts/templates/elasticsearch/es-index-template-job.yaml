@@ -17,9 +17,9 @@ spec:
           image: nybbledevcontainerregistry.azurecr.io/nybbledev/nybble-toolbox:latest
           env:
             - name: index.template.path
-            value: {{ .Values.elasticsearch.pushIndexTemplate.templatePath }}
+              value: {{ .Values.elasticsearch.pushIndexTemplate.templatePath }}
             - name: client.node
-            value: {{ template "opendistro-es.fullname" . }}-client-service:9200
+              value: {{ template "opendistro-es.fullname" . }}-client-service:9200
           command: ["/bin/sh"]
           args: ["-c", "wget --output-document nybble-es-template.json $(index.template.path) && curl -XPUT --insecure -u admin:admin -H 'Content-Type: application/json' https://$(client.node)/_index_template/nybble-template -d@nybble-es-template.json"]
 {{- end }}
