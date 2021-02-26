@@ -16,7 +16,7 @@ spec:
       restartPolicy: OnFailure
       containers:
       - name: {{ template "opendistro-es.fullname" . }}-index-template
-        image: yauritux/busybox-curl
+        image: nybble-toolbox
         env:
         - name: index.template.path
           value: {{ .Values.elasticsearch.pushIndexTemplate.templatePath }}
