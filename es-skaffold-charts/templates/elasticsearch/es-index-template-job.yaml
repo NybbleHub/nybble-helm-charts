@@ -7,7 +7,8 @@ metadata:
   name: {{ template "opendistro-es.fullname" . }}-index-template
   namespace: {{ .Release.Namespace }}
   annotations:
-    "helm.sh/hook": "post-install"
+    "helm.sh/hook": post-install
+    "helm.sh/hook-delete-policy": hook-succeeded
 spec:
   template:
     spec:
