@@ -26,7 +26,7 @@ spec:
           env:
             - name: client.node
               value: {{ template "opendistro-es.fullname" . }}-client-service:9200
-          command: [ 'sh', '-c', 'until [[ curl -XGET --insecure -u admin:admin https://$(client.node) =~ "acknowledged"]]; do echo "Waiting for Elasticsearch security initialization"; sleep 5; done;' ]
+          command: [ 'sh', '-c', 'while [[ curl -XGET --insecure -u admin:admin https://$(client.node) =~ "Open Distro Security"]]; do echo "Waiting for Elasticsearch security initialization"; sleep 5; done;' ]
       containers:
         - name: {{ template "opendistro-es.fullname" . }}-index-template
           image: nybbledevcontainerregistry.azurecr.io/nybbledev/nybble-toolbox:latest
