@@ -157,6 +157,12 @@ global:
 
 
 elasticsearch:
+
+  # Elasticsearch index template settings
+  pushIndexTemplate:
+    enabled: false
+    templatePath: ""
+
   ## Used when deploying hot/warm architecture. Allows second aliased deployment to find cluster.
   ## Default {{ template opendistro-es.fullname }}-discovery.
   discoveryOverride: ""
