@@ -2,10 +2,10 @@ apiVersion: v1
 entries:
   opendistro-es:
   - apiVersion: v1
-    appVersion: 1.13.0
-    created: "2021-02-23T11:11:59.915257+01:00"
+    appVersion: 1.13.2
+    created: "2021-10-19T13:56:37.780494+02:00"
     description: Open Distro for Elasticsearch
-    digest: 3f30e158349811e76b77e0056cdb366f7d233fbab2bcafce268f2df8e22720b5
+    digest: 62f939b47f7a7a79a5f6d634898e0edec1ebc61230288dd1313f3aa803da3963
     kubeVersion: ^1.10.0-0
     maintainers:
     - email: derek.heldt-werle@viasat.com
@@ -16,6 +16,6 @@ entries:
     sources:
     - https://pages.git.viasat.com/ATG/charts
     urls:
-    - https://nybblehub.github.io/nybble-helm-charts/es-skaffold-charts/opendistro-es-1.13.0.tgz
-    version: 1.13.0
-generated: "2021-02-23T11:11:59.910105+01:00"
+    - https://nybblehub.github.io/nybble-helm-charts/odfe-charts/opendistro-es-1.13.2.tgz
+    version: 1.13.2
+generated: "2021-10-19T13:56:37.779013+02:00"
